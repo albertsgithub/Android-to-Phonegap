@@ -1,0 +1,627 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>解密陌生人</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<!-- css连接 -->
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="css/global.css">
+	<link rel="stylesheet" href="css/scrollbar.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/buttons.css"/><!-- 漂亮按钮 -->
+    <!-- 融云 -->
+    <script src="http://res.websdk.rongcloud.cn/RongIMClient.min.js"></script>
+<!-- js导入 -->
+	<script src="js/cordova.js"></script>
+	<script src="js/jquery-1.8.2.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/global.js"></script>
+	<script src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/jquery.qrcode.min.js"></script><!-- 二维码 -->
+	<!--引用百度地图API-->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.4&services=true"></script>
+    <!--雪花-->
+    <script src="js/game.js"></script>
+    <script type="text/javascript" src="js/snow.js"></script>
+<!-- script -->
+    <script>
+    createSnow("",60);//生成雪花
+    </script>
+<!-- css style -->
+    <style>
+    
+    </style>
+</head>
+<body>
+
+<!--登录页面-->
+<div data-role="page" class="bgPage" id="loginPage">
+		<div data-role="header" data-theme="b"><h1>登陆</h1></div>
+		<div data-role="content">
+					<div align="center"><img src="img/logo.png"></div>
+					<label for="username">用户名:</label>
+                     <input type="text" name="username" id="username" autocomplete="on" placeholder="用户名" /> 
+               		<label for="password">密码:</label>
+                	 <input type="password" name="password" id="password" placeholder="密码" />
+				<a href="#mainPage" id="loginButton" data-role="button" data-shadow="true" data-transition="slide">登陆</a><br/>
+              <a href="#regPage" class="backbtn" id="regButton" data-transition="none">点击注册</a>
+		</div>
+	</div>
+
+<!-- 注册页面 -->
+<div data-role="page" class="bgPage" id="regPage">
+		<div data-role="header"  data-theme="b"><h1>注册</h1></div>
+		<div data-role="content">
+		<a href="#loginPage" class="backbtn" data-transition="slide"><<返回</a>
+			<form action="#" method="post" id="regForm">
+				<div data-role="fieldcontain" class="ui-hide-label">
+					    <input type="text" name="username" id="username" placeholder="用户名" /> 
+						<input type="password" name="password" id="password" placeholder="密码" />
+						<input type="password" name="password2" id="password2" value="" placeholder=" 确认密码" />
+						<a href="#imgPage"  data-role="button" data-transition="none">选择头像</a>
+						<div id="headimg" class="seleced-user-head-img"></div>
+				</div>
+				<a href="#regPage" id="regButton" data-role="button" data-theme="d">注册</a>
+				<a href="#" data-role="button" data-theme="c" data-transition="none">取消</a>
+			</form>
+		</div>
+	</div>
+
+<!-- 用户选择头像页面 -->
+<div data-role="page" class="bgPage" id="imgPage">
+			<div data-role="header" data-theme="b"><h1>选择头像</h1></div>
+			<div data-role="content">
+			<a href="#regPage" class="backbtn" data-transition="slide"><<返回</a>
+					<div id="scroller">
+						<ul id="headpicul">
+							<li>
+								<img src="img/headpic/1.png" onclick="selectImg(1)"/>
+							</li>
+						</ul>
+					</div>
+			</div>
+		</div>
+<!--主页面-->
+<div data-role="page" class="bgPage" id="mainPage">
+			<div data-role="header" data-theme="b" data-position="fixed"><h1>解密陌生人</h1></div>
+			<div data-role="content">
+			<a href="#loginPage" class="backbtn" data-transition="slide"><<注销</a>
+		<ul id="bar">
+		<!-- 1 -->
+        <a href="#indiviPage" data-transition="slide">
+			<li id="iphone">
+				<div class="top"><img src="img/pic/1.png"/></div>
+		</a>
+				<div class="bottom">
+					<div class="infobox"><h3>个人</h3></div>
+				</div>
+			</li>
+             </a>
+        <!-- 2 -->
+        <a href="#recentPage" data-transition="slide">
+			<li id="macbook">
+				<div class="top"><img src="img/pic/2.png"/></div>
+		</a>
+				<div class="bottom">
+					<div class="infobox"><h3>消息</h3></div>
+				</div>
+			</li>
+			</a>
+		<!-- 3 -->
+        <a href="#interestPage" data-transition="slide">
+			<li id="ipod">
+				<div class="top"><img src="img/pic/3.png"/></div>
+		</a>
+				<div class="bottom">
+					<div class="infobox"><h3>动态</h3></div>
+				</div>
+			</li>
+			</a>
+		<!-- 4 -->
+        <a href="#contactPage" data-transition="slide">
+			<li id="cinema">
+				<div class="top"><img src="img/pic/4.png"/></div>
+		</a>
+				<div class="bottom">
+					<div class="infobox"><h3>好友</h3></div>
+				</div>
+			</li>
+			</a>
+		<!-- 5 -->
+        <a href="#" data-transition="slide">
+			<li id="macmini">
+				<div class="top"><img src="img/pic/5.png"/></div>
+		</a>
+				<div class="bottom">
+					<div class="infobox"><h3>相机</h3></div>
+				</div>
+			</li>
+			</a>
+		</ul>
+		<img src="img/desk.png">
+			</div><!-- content -->
+</div><!-- page -->
+
+<!-- 百度地图page页面 -->
+<div data-role="page" id="baiduPage" class="bgPage">
+	<div data-role="header" data-position="fixed" data-theme="b">
+	<h1>百度地图</h1>
+	<a href="#contactPage" class="backbtn" data-transition="slide"><<返回</a>
+	</div>
+		<div data-role="content" id="container" style="height:450px;width:320px">
+		</div>
+	<div data-role="footer" data-position="fixed" data-theme="b"><h4>解密陌生人</h4></div>
+</div><!-- page -->
+
+<!--好友-->
+<div data-role="page" class="bgPage" id="contactPage">
+			<div data-role="header" data-position="fixed" data-theme="b"><h1>好友</h1></div><!-- header -->
+			<div data-role="content" data-theme="d">
+			<a href="#mainPage" class="backbtn" data-transition="slide"><<返回</a>
+			<a href="#baiduPage" class="backbtn" data-transition="slide" style="float:right"><摇一摇></a>
+				<a href="#gamePage" data-role="button" data-transition="none">游戏1</a>
+				<a href="#game2Page" data-role="button" data-corners="false">游戏2</a>
+              <div data-role="collapsible">
+                 <h1>我的好友</h1>
+                  <ul data-role="listview" id="speul"  data-filter-theme="e" data-filter="true" data-filter-placeholder="搜索好友..."
+                   data-split-icon="delete" data-split-theme="a" data-inset="true">
+                  <li><a href="#messagepPage">
+                  	<img src="img/smallimg/2.png">蒋信厚<p>当你眼中只有一个目标的时候...</p>
+                    	<a href="#deletecontact" data-rel="popup" data-position-to="window" data-transition="pop">deletecontact</a>
+                    	</a>
+                  </li>
+                  <li><a href="#"><img src="img/smallimg/1.png">马翔宇<p>我是都比...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/5.png">薛明良<p>有志者事竟成...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/4.png">杜老师<p>no problem...</p></a></li>
+                  </ul>
+              </div>
+              <div data-role="collapsible">
+                  <h1>我的家人</h1>
+                  <ul data-role="listview" id="speul" data-filter-theme="e" data-filter="true" data-filter-placeholder="搜索好友...">
+                  <li><a href="#"><img src="img/smallimg/2.png">蒋信厚<p>当你眼中只有一个目标的时候...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/1.png">马翔宇<p>我是都比...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/5.png">薛明良<p>有志者事竟成...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/4.png">杜老师<p>no problem...</p></a></li>
+                  </ul>
+              </div>
+              <div data-role="collapsible">
+                  <h1>我的同学</h1>
+                  <ul data-role="listview" id="speul" data-filter-theme="e" data-filter="true" data-filter-placeholder="搜索好友...">
+                  <li><a href="#"><img src="img/smallimg/2.png">蒋信厚<p>当你眼中只有一个目标的时候...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/1.png">马翔宇<p>我是都比...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/5.png">薛明良<p>有志者事竟成...</p></a></li>
+                  <li><a href="#"><img src="img/smallimg/4.png">兰健<p>no problem...</p></a></li>
+                  </ul>
+             </div>
+              <!-- 删除好友确认框，id=deletecontact -->
+              <div data-role="popup" id="deletecontact" data-theme="a" data-overlay-theme="b" class="ui-content"
+              style="max-width:340px; padding-bottom:2em;">
+              	<h3>删除好友？</h3>
+               <p>你要删除该好友吗？</p>
+               <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-btn-icon-left ui-btn-inline ui-mini">确定</a>
+               <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">取消</a>
+              </div>
+            </div><!--content-->
+            <div data-role="footer" data-theme="b" data-position="fixed">
+	       </div><!--footer-->
+</div>
+<!-- 好友信息界面 -->
+<div data-role="page" id="messagepPage" class="bgPage">
+	<div data-role="header" data-position="fixed" data-theme="b"><h1>对方昵称</h1></div>
+	<div data-role="content">
+    <img src="img/headpic/3.png">
+    性别：<h5>男</h5>
+    年龄：<h5>23</h5>
+	<a href="#chatPage">发消息</a>
+	</div>
+	<div data-role="footer" data-position="fixed" data-theme="b"><h4>好友信息</h4></div>
+</div><!-- page -->
+<!-- 聊天界面 -->
+<div data-role="page" id="chatPage" class="bgPage">
+	<div data-role="header" data-position="fixed" data-theme="b">
+	<a href="#contactPage" class="backbtn" data-transition="slide"><<返回</a>
+	<h1>对方昵称</h1>
+	</div>
+	<div data-role="content">
+    <ul id="comment-ul">
+    <li>hello!</li>
+    </ul>
+	</div>
+	<div data-role="footer" data-position="fixed" data-theme="e">
+    <div class="lfloat" id="voice_btn"><img src="img/ui/voice_btn.png" onMouseDown="" onMouseUp=""><!-- 语音按钮 --></div>
+    <div class="lfloat"><input id="myInput"></input><!-- 输入框 --></div>
+    <div class="lfloat" id="send_btn"><button onClick="sendMessage()">发送</button></div>
+	</div>
+</div><!-- page -->
+<!--最近聊天页面-->
+<div data-role="page" class="bgPage" id="recentPage">
+	<div data-role="header" data-position="fixed" data-theme="b"><h1>最近聊天</h1></div>
+		<div data-role="content" data-theme="d">
+		<a href="#mainPage" class="backbtn" data-transition="slide"><<返回</a>
+		<div id="scroller">
+		<ul>
+			<li><img src="img/pic/1.png"><div style="float:right">今天都四月一号了啊。。。。。什么时候考试？</div></li>
+			<li><img src="img/pic/3.png"><div style="float:right">人呢？</div></li>
+			<li><img src="img/pic/2.png"><div style="float:right">什么鬼？》-《</div></li>
+		</ul>
+		</div>
+			</div><!-- content -->
+            <div data-role="footer" data-theme="b" data-position="fixed">
+	       </div><!--footer-->
+</div>
+
+<!-- 个人页面 -->
+<div data-role="page" class="bgPage" id="indiviPage">
+			<div data-role="header" data-position="fixed" data-theme="b"><h1>个人</h1></div>
+			<div data-role="content" data-theme="d">
+			<a href="#mainPage" class="backbtn" data-transition="slide"><<返回</a>
+				<a href="#qrcodePage" data-role="button" data-transition="none">二维码</a>
+			</div>
+            <div data-role="footer" data-theme="b" data-position="fixed">
+	       </div><!--footer-->
+</div>
+<!-- 二维码页面 -->
+<div data-role="page" class="bgPage" id="qrcodePage">
+			<div data-role="header" data-position="fixed" data-theme="b"><h1>二维码</h1></div>
+			<div data-role="content" data-theme="d">
+			<a href="#indiviPage" class="backbtn" data-transition="slide"><<返回</a>
+			   <div class="demo">
+		   		<p>请输入内容然后提交生成二维码：</p>
+		        <input type="text" class="input" id="mytxt" value=""> 
+		        <input type="button" id="sub_btn" value="提交">
+		   		<div id="code" align="center"></div>
+  				</div>
+			</div>
+            <div data-role="footer" data-theme="b" data-position="fixed">
+	       </div><!--footer-->
+</div><!-- page -->
+
+<!-- 动态页面 -->
+<div data-role="page" class="bgPage" id="interestPage">
+			<div data-role="header" data-position="fixed" data-theme="b"><h1>动态</h1>
+			<a href="#mainPage" class="backbtn" data-transition="slide"><<返回</a></div>
+			<div data-role="content" id="newscontent" data-theme="d">
+		<div id="pullDown"><span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span></div>
+<div id="wrapper">
+	<div id="scroller">
+		<div id="pullDown">
+			<span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+		</div>
+		<ul id="thelist">
+			<li><a href="#commentPage"><div style="float:left">蒋信厚:</div>&nbsp&nbsp&nbsp&nbsp终于考完试了。。。</a></li>
+			<li><div style="float:left">蒋信厚:</div>&nbsp&nbsp&nbsp&nbsp又要考试？</li>
+			<li><div style="float:left">薛明良:</div>&nbsp&nbsp&nbsp&nbsp今天天气真好！</li>
+			<li><div style="float:left">马翔宇:</div>&nbsp&nbsp&nbsp&nbsp都比看这里看这里！</li>
+			<li><div style="float:left">马翔宇:</div>&nbsp&nbsp&nbsp&nbsp黑化肥会挥发。。。</li>
+			<li><div style="float:left">薛明良:</div>&nbsp&nbsp&nbsp&nbsp回家喽~</li>
+			<li><div style="float:left">薛明良:</div>&nbsp&nbsp&nbsp&nbsp又要开学了啊</li>
+			<li><div style="float:left">蒋信厚:</div>&nbsp&nbsp&nbsp&nbsp忙成狗成狗。。</li>
+			<li><div style="float:left">蒋信厚:</div>&nbsp&nbsp&nbsp&nbsp，，，，</li>
+		</ul>
+		<div id="pullUp">
+			<span class="pullUpIcon"></span><span class="pullUpLabel">上拉加载更多...</span>
+		</div>
+	</div>
+</div>
+			</div><!-- content -->
+            <div data-role="footer" data-theme="b" data-position="fixed">
+	       </div><!--footer-->
+		</div>
+<!-- 评论界面 -->
+		<div data-role="page" class="bgPage" id="commentPage"  data-theme="d">
+			<div data-role="header" data-position="fixed" data-theme="b"><h1>评论说说</h1></div>
+			<div data-role="content"  data-theme="d">
+			<a href="#interestPage" class="backbtn" data-transition="slide"><<返回</a>
+				<div>
+						<div id="publish-name" class="">马翔宇</div> 
+						<div id="publish-time" class="">04-15 13:12</div>
+						<div id="publish-content">原来草莓这么好吃呢~》《</div>
+						<img id="publish-pic" src="img/pic/strawberry.png" onerror="errpic(this)" class="head"/>
+						<br>
+					<a href="#" data-role="button" data-inline="true" data-mini="true">我要评论</a>
+					<ul id="comment-ul">
+						<li id="comment-li"><a href="" id="comment-name" class="backbtn">薛明良:</a><span id="comment-content">才知道啊！</span></li>
+					</ul>
+				</div>
+			</div><!-- content -->
+		</div>
+<!-- game -->	
+<div data-role="page" class="bgPage" id="gamePage" position="fixed">
+	<div data-role="header" data-theme="b" position="fixed"><h1>记忆消除游戏</h1></div>
+		<div data-role="content" id="gamecontent" position="fixed">
+		<a href="#contactPage" class="backbtn" data-transition="slide"><<返回</a>
+        <!--背景音乐-->
+   	 <img id="00" src="img/game/what.png">
+     <font id="timetxt" style=" font-size:20px; color:#00F">倒计时：</font>
+     <font id="countTime" style=" font-size:34px; color:#F00">0</font>
+     <font style=" font-size:14px; color:#F00">误点个数：</font>
+     <font id="wrongnum" style=" font-size:24px; color:#00F">0</font>
+     <!--游戏表格区-->
+     <div id="gamearea">
+ <table width="300px" height="300px" cellspacing="3px" cellpadding="3px">
+  <tr>
+    <td><img class="daimond" id="diamond1" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond2" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond3" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond4" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+  <tr>
+    <td><img class="daimond" id="diamond5" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond6" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond7" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond8" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+  <tr>
+    <td><img class="daimond" id="diamond9"  src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond10" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond11" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond12" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+  <tr>
+    <td><img class="daimond" id="diamond13" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond14" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond15" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond16" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+</table>
+<a href="#" data-icon="♞" class="button blue skew" onClick="gameinit()">开始游戏</a>
+</div><!--gamearea-->
+</div><!--content-->
+	<div data-role="footer" data-theme="a" data-position="fixed">
+	<h1>加油，完成游戏解密对方信息^_^</h1>
+	</div><!--footer-->
+</div><!-- gamepage -->
+<script>
+//消除用时
+var usedtime;
+//游戏状态
+var ready;
+//图片资源路径字符串
+var s0;
+//游戏区各种颜色钻石的数量：
+var rednum;
+var purplenum;
+var greennum;
+//需要消除的颜色的数量
+var neednum;
+//错误个数
+var wrongnum;
+//要消除的颜色代号[red:0;green:1;purple:2]
+var targetcolornum;
+//定义数组用于保存钻石分布信息,下标为0的不用
+var diaArray=new Array();
+//方块名称数组
+var imgName = new Array("red.png","green.png","purple.png");
+var imgName2 = new Array("red2.png","green2.png","purple2.png");//小图
+//alert(Math.floor(Math.random()*10%3));
+//alert(imgName[Math.floor(Math.random()*10%3)]);
+	//清空div画面
+	function removeall(){
+		window.location.reload();
+		}
+	function gameinit(){
+	//用时
+	usedtime=0;
+    //游戏状态
+	ready=false;
+	//初始化钻石数量
+	rednum=0;
+	purplenum=0;
+	greennum=0;
+	//需要消除的个数
+	neednum=0;
+	//初始化错误个数
+	wrongnum=0;
+	var timetxt = document.getElementById("countTime");
+	timetxt.innerHTML="0";
+	var t = 5;
+	var t1=setInterval(function(){t--;timetxt.innerHTML=t;},1000);
+	var t2=setInterval(function(){if(timetxt.innerText<0){timetxt.innerText="0";clearInterval(t1);clearInterval(t2);clear()}},10);
+	//初始化游戏区
+	var img = document.getElementById("00");
+	var s=img.src;
+	var index1=s.lastIndexOf("/");
+    s0=s.slice(0,index1+1);//游戏图片资源所在文件夹的路径
+	//随机生成游戏区的钻石
+	for(var d=1;d<=16;d++){
+		var dd=d;
+		var str=dd.toString();
+		var tempimg=document.getElementById("diamond"+str);
+		diaArray[d]=Math.floor(Math.random()*10%3);
+		tempimg.src=s0+imgName[diaArray[d]];
+		switch(diaArray[d]){
+			case 0:rednum++;break;
+			case 1:greennum++;break;
+			case 2:purplenum++;break;
+			default:alert("error");
+			}
+		}
+	function clear(){
+		//开始计时
+		//var t3=setInterval(usedtime++,1000);
+		document.getElementById("timetxt").innerHTML="已用时间：";
+		var counttime=document.getElementById("countTime");
+		var usedt=0;
+		var t3=setInterval(function(){usedt++;usedtime=usedt;counttime.innerHTML=usedt.toString();},1000);
+		//可以点了
+		ready=true;
+		//揭开要消除的颜色
+		targetcolornum = Math.floor(Math.random()*10%3);
+		img.src=s0+imgName2[targetcolornum];
+		//确定需要消除的颜色的数量
+		switch(targetcolornum){
+			case 0:neednum=rednum;break;
+			case 1:neednum=greennum;break;
+			case 2:neednum=purplenum;break;
+			default:alert("error");
+			}
+		//隐藏钻石
+		for(var d=1;d<=16;d++){
+		var dd=d;
+		var str=dd.toString();
+		var tempimg=document.getElementById("diamond"+str);
+		tempimg.src=s0+"whatbig.png";
+		}
+		}
+		}
+//计算综合得分
+function score(wrongNum,usedTime,neednum){
+	var first=Math.floor(neednum/3);
+	if(wrongnum<=first){
+		return 100-(wrongNum*5+usedTime);
+		}
+		else{
+			return 100-(wrongNum*10+usedTime);
+			}
+	}
+//处理玩家操作响应
+function response(obj){
+	if(!ready){return;}//如果游戏还没开始则不处理响应
+	var eimg = document.getElementById(obj.id);
+	var ID=obj.id;
+	var theid=ID.slice(7);//点击的钻石的编号下标
+	if(diaArray[theid]==targetcolornum.toString())//如果点击的是需要消除的
+	{
+	//播放声音
+	
+	eimg.src=s0+imgName[targetcolornum];//显示
+	--neednum;
+	//已经全部选中
+	if(neednum<=0){
+		ready=false;
+		if(wrongnum==0){
+		alert("哇偶好厉害全部选对！^_^"+"<br>"+"用时"+usedtime+"秒！");
+		}else if(wrongnum>3){
+			alert("... ... 你终于全部选粗来了！"+"用时"+usedtime+"秒！");
+			}else{
+				alert("恭喜全部选粗来了！"+"用时"+usedtime+"秒！");
+				}
+				var finscore=score(wrongnum,usedtime,neednum).toString();
+				if(finscore<=0)
+				{alert("零蛋！唉...怎么说你好呢~"); removeall();}
+				else{
+		        alert("综合得分："+finscore);
+				}
+				 //重置
+				  removeall();
+				 //跳转
+				 $.mobile.changePage("login.html");
+	              }
+	    }else{
+		//错误个数+1
+		wrongnum++;
+		//播放错误音效
+		document.getElementById("wrongnum").innerHTML=wrongnum.toString();
+		//alert("哎呦喂~点错啦亲！=_=");
+		eimg.src="img/game/cry.png";//标记
+		 }
+	}//init end
+</script>
+<!-- game2 -->
+<style>
+</style>
+<div data-role="page" class="bgPage" id="game2Page" position="fixed">
+	<div data-role="header" data-theme="b" position="fixed"><h1>拼图游戏</h1>	</div>
+	<div data-role="content" id="content2" position="fixed">
+	<a href="#contactPage" class="backbtn" data-transition="slide"><<返回</a>
+<div id="myscreen">
+<table width="220" height="220" border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><img id="pic1" src="img/game/1.png" onClick="deal(this)"></td>
+    <td><img id="pic2" src="img/game/2.png" onClick="deal(this)"></td>
+    <td><img id="pic3" src="img/game/3.png" onClick="deal(this)"></td>
+    </tr>
+  <tr>
+    <td><img id="pic4" src="img/game/4.png" onClick="deal(this)"></td>
+    <td><img id="pic5" src="img/game/5.png" onClick="deal(this)"></td>
+    <td><img id="pic6" src="img/game/6.png" onClick="deal(this)"></td>
+    </tr>
+  <tr>
+    <td><img id="pic7" src="img/game/7.png" onClick="deal(this)"></td>
+    <td><img id="pic8" src="img/game/8.png" onClick="deal(this)"></td>
+    <td><img id="pic9" src="img/game/white.png" onClick="deal(this)"></td>
+    </tr>
+</table>
+	</div><!-- myscreen -->
+	</div><!-- content -->
+	<div data-role="footer" data-theme="a" data-position="fixed">
+	<h1>加油，完成游戏解密对方信息^_^</h1>
+	</div><!--footer-->
+</div><!-- page -->
+</div>
+<script type="text/javascript">
+var tempid="pic9";
+var index1;
+var a1,a2,a3,a4,a5,a6,a7,a8,a9;
+a1 = document.getElementById("pic1");
+a2 = document.getElementById("pic2");
+a3 = document.getElementById("pic3");
+a4 = document.getElementById("pic4");
+a5 = document.getElementById("pic5");
+a6 = document.getElementById("pic6");
+a7 = document.getElementById("pic7");
+a8 = document.getElementById("pic8");
+a9 = document.getElementById("pic9");
+
+function operate(obj)
+{
+	var timg = document.getElementById(tempid);
+	tempid = obj.id;
+	timg.src=obj.src;
+	var eimg = document.getElementById(obj.id);
+	eimg.src="img/game/white.png";
+}
+
+function deal(obj)
+{	
+	var s1,s2,s3,s4,s5,s6,s7,s8,s9;
+    if(tempid == "pic9" && (obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic8" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic7" && (obj.id == "pic4" || obj.id == "pic8") ||
+		tempid == "pic6" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic5" && (obj.id == "pic2" || obj.id == "pic4" || obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic4" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic3" && (obj.id == "pic2" || obj.id == "pic6") ||
+		tempid == "pic2" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic1" && (obj.id == "pic4" || obj.id == "pic2"))
+	{
+		operate(obj);	
+		s1 = a1.src.slice( a1.src.lastIndexOf("/") + 1 , a1.src.lastIndexOf("/") + 2);
+		s2 = a2.src.slice( a2.src.lastIndexOf("/") + 1 , a2.src.lastIndexOf("/") + 2);		
+		s3 = a3.src.slice( a3.src.lastIndexOf("/") + 1 , a3.src.lastIndexOf("/") + 2);		
+		s4 = a4.src.slice( a4.src.lastIndexOf("/") + 1 , a4.src.lastIndexOf("/") + 2);
+		s5 = a5.src.slice( a5.src.lastIndexOf("/") + 1 , a5.src.lastIndexOf("/") + 2);
+		s6 = a6.src.slice( a6.src.lastIndexOf("/") + 1 , a6.src.lastIndexOf("/") + 2);
+		s7 = a7.src.slice( a7.src.lastIndexOf("/") + 1 , a7.src.lastIndexOf("/") + 2);		
+		s8 = a8.src.slice( a8.src.lastIndexOf("/") + 1 , a8.src.lastIndexOf("/") + 2);
+		s9 = a9.src.slice( a9.src.lastIndexOf("/") + 1 , a9.src.lastIndexOf("/") + 2);
+		if(s1 == "1" && s2 == "2" && s3 == "3" && s4 == "4" &&
+		   s5 == "5" && s6 == "6" && s7 == "7" && s8 == "8" && s9 == "w")
+		{
+			$.mobile.changePage("#mainPage");
+		}
+	}	
+}
+
+function autodeal(obj)
+{
+	if(tempid == "pic9" && (obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic8" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic7" && (obj.id == "pic4" || obj.id == "pic8") ||
+		tempid == "pic6" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic5" && (obj.id == "pic2" || obj.id == "pic4" || obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic4" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic3" && (obj.id == "pic2" || obj.id == "pic6") ||
+		tempid == "pic2" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic1" && (obj.id == "pic4" || obj.id == "pic2"))
+	operate(obj);
+}
+
+for(var i=0;i<200;i++)
+{
+	autodeal(document.getElementById("pic"+ String(1 + Math.floor(Math.random() * ( 8 + 1)))));
+}
+</script>
+</body>
+</html>

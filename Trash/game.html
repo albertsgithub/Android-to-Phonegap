@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+<title>消除钻石游戏</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width,height=device-height,initial-scale=1.0" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+	<script src="js/jquery-1.8.2.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="js/snow.js"></script><!--雪花-->
+    <script>createSnow("",60)</script>
+    <style>
+	#gamepage{
+			background: -webkit-gradient(linear,0 0,0 100%, from(#000),to(#309));
+		}
+    #gamecontent{
+    border:20px;
+    }
+    #gamearea{
+    position:absolute;
+	vertical-align:central;
+	left:20px;
+	    }
+    </style>
+</head>
+<body>
+<div data-role="page" id="gamepage" position="fixed">
+	<div data-role="header" data-theme="b" position="fixed">
+		<h1>记忆消除游戏</h1>
+		<a href="login.html" data-icon="arrow-l" data-transition="slide"></a>
+	</div>
+<div data-role="content" id="gamecontent" position="fixed">
+    <img id="00" src="img/game/what.png">
+     <font id="timetxt" style=" font-size:20px; color:#00F">倒计时：</font>
+     <font id="countTime" style=" font-size:34px; color:#F00">0</font>
+     <font style=" font-size:14px; color:#F00">误点个数：</font>
+     <font id="wrongnum" style=" font-size:24px; color:#00F">0</font>
+     <!--游戏表格区-->
+     <div id="gamearea">
+ <table width="300px" height="300px" cellspacing="3px" cellpadding="3px">
+  <tr>
+    <td><img class="daimond" id="diamond1" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond2" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond3" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond4" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+  <tr>
+    <td><img class="daimond" id="diamond5" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond6" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond7" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond8" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+  <tr>
+    <td><img class="daimond" id="diamond9"  src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond10" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond11" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond12" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+  <tr>
+    <td><img class="daimond" id="diamond13" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond14" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond15" src="img/game/focus.png" onClick="response(this)"></td>
+    <td><img class="daimond" id="diamond16" src="img/game/focus.png" onClick="response(this)"></td>
+  </tr>
+</table>
+</div><!--gamearea-->
+</div><!--content-->
+</div><!-- gamepage -->
+<script>
+//消除用时
+var usedtime;
+//游戏状态
+var ready;
+//图片资源路径字符串
+var s0;
+//游戏区各种颜色钻石的数量：
+var rednum;
+var purplenum;
+var greennum;
+//需要消除的颜色的数量
+var neednum;
+//错误个数
+var wrongnum;
+//要消除的颜色代号[red:0;green:1;purple:2]
+var targetcolornum;
+//定义数组用于保存钻石分布信息,下标为0的不用
+var diaArray=new Array();
+//方块名称数组
+var imgName = new Array("red.png","green.png","purple.png");
+var imgName2 = new Array("red2.png","green2.png","purple2.png");//小图
+//alert(Math.floor(Math.random()*10%3));
+//alert(imgName[Math.floor(Math.random()*10%3)]);
+	//清空div画面
+	function removeall(){
+		window.location.reload();
+		}
+	function gameinit(){
+	//用时
+	usedtime=0;
+    //游戏状态
+	ready=false;
+	//初始化钻石数量
+	rednum=0;
+	purplenum=0;
+	greennum=0;
+	//需要消除的个数
+	neednum=0;
+	//初始化错误个数
+	wrongnum=0;
+	var timetxt = document.getElementById("countTime");
+	timetxt.innerHTML="0";
+	var t = 5;
+	var t1=setInterval(function(){t--;timetxt.innerHTML=t;},1000);
+	var t2=setInterval(function(){if(timetxt.innerText<0){timetxt.innerText="0";clearInterval(t1);clearInterval(t2);clear()}},10);
+	//初始化游戏区
+	var img = document.getElementById("00");
+	var s=img.src;
+	var index1=s.lastIndexOf("/");
+    s0=s.slice(0,index1+1);//游戏图片资源所在文件夹的路径
+	//随机生成游戏区的钻石
+	for(var d=1;d<=16;d++){
+		var dd=d;
+		var str=dd.toString();
+		var tempimg=document.getElementById("diamond"+str);
+		diaArray[d]=Math.floor(Math.random()*10%3);
+		tempimg.src=s0+imgName[diaArray[d]];
+		switch(diaArray[d]){
+			case 0:rednum++;break;
+			case 1:greennum++;break;
+			case 2:purplenum++;break;
+			default:alert("error");
+			}
+		}
+	function clear(){
+		//开始计时
+		//var t3=setInterval(usedtime++,1000);
+		document.getElementById("timetxt").innerHTML="已用时间：";
+		var counttime=document.getElementById("countTime");
+		var usedt=0;
+		var t3=setInterval(function(){usedt++;usedtime=usedt;counttime.innerHTML=usedt.toString();},1000);
+		//可以点了
+		ready=true;
+		//揭开要消除的颜色
+		targetcolornum = Math.floor(Math.random()*10%3);
+		img.src=s0+imgName2[targetcolornum];
+		//确定需要消除的颜色的数量
+		switch(targetcolornum){
+			case 0:neednum=rednum;break;
+			case 1:neednum=greennum;break;
+			case 2:neednum=purplenum;break;
+			default:alert("error");
+			}
+		//隐藏钻石
+		for(var d=1;d<=16;d++){
+		var dd=d;
+		var str=dd.toString();
+		var tempimg=document.getElementById("diamond"+str);
+		tempimg.src=s0+"whatbig.png";
+		}
+		}
+		}
+//计算综合得分
+function score(wrongNum,usedTime,neednum){
+	var first=Math.floor(neednum/3);
+	if(wrongnum<=first){
+		return 100-(wrongNum*5+usedTime);
+		}
+		else{
+			return 100-(wrongNum*10+usedTime);
+			}
+	}
+//处理玩家操作响应
+function response(obj){
+	if(!ready){return;}//如果游戏还没开始则不处理响应
+	var eimg = document.getElementById(obj.id);
+	var ID=obj.id;
+	var theid=ID.slice(7);//点击的钻石的编号下标
+	if(diaArray[theid]==targetcolornum.toString())//如果点击的是需要消除的
+	{
+	//播放声音
+	
+	eimg.src=s0+imgName[targetcolornum];//显示
+	--neednum;
+	//已经全部选中
+	if(neednum<=0){
+		ready=false;
+		//document.getElementById("counttime").innerHTML=0;
+		if(wrongnum==0){
+		alert("哇偶好厉害全部选对！^_^"+"<br>"+"用时"+usedtime+"秒！");
+		}else if(wrongnum>3){
+			alert("... ... 你终于全部选粗来了！"+"用时"+usedtime+"秒！");
+			}else{
+				alert("恭喜全部选粗来了！"+"用时"+usedtime+"秒！");
+				}
+				var finscore=score(wrongnum,usedtime,neednum).toString();
+				if(finscore<=0)
+				{alert("零蛋！唉...怎么说你好呢~"); removeall();}
+				else{
+		        alert("综合得分："+finscore);
+				}
+				 //重置
+				  removeall();
+	              }
+	    }else{
+		//错误个数+1
+		wrongnum++;
+		//播放错误音效
+		
+		document.getElementById("wrongnum").innerHTML=wrongnum.toString();
+		//alert("哎呦喂~点错啦亲！=_=");
+		eimg.src="img/game/cry.png";//标记
+		 }
+	}//init end
+	$(document).ready(gameinit());
+</script>
+</body>
+</html>

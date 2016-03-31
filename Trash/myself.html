@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>个人</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+		<script src="js/jquery-1.8.2.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+		<script src="js/global.js"></script>
+		<script src="js/iscroll.js"></script>
+		<link rel="stylesheet" href="css/frame/ios_inspired/styles.css"/>
+		<link rel="stylesheet" href="css/global.css">
+	</head>
+	<body>
+<!-- 个人页面 -->
+		<div data-role="page" id="contentPage2" data-dom-cache="true">
+			<div data-role="header" data-position="fixed" data-theme="b">
+				<h1>个人</h1>
+			</div>
+			<div data-role="content" data-theme="d">
+				<div id="wrapperContent2" class="wrapper">
+					<div id="scrollerContent2" class="scroller">
+						<ul data-role="listview" id="contentList2" class="contentList">
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="footer" class="nav-style" data-role="footer" data-theme="a"
+				data-position="fixed">
+				<div data-role="navbar" data-grid="c" class="nav-style">
+					<ul>
+						<li>
+							<a href="shake.html" id="skull" data-icon="key">摇一摇</a>
+						</li>
+						<li>
+							<a href="recently.html" id="chat" data-icon="chat">最近聊天</a>
+						</li>
+						<li>
+							<a href="interest.html" id="email" data-icon="alert" >新鲜事儿</a>
+						</li>
+						<li class="ui-btn-active">
+							<a href="myself.html" id="beer" data-icon="gear">个人</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+<script type="text/javascript">
+		var myScroll;
+		function loaded3() {
+			if(myScroll!=null){
+				myScroll.destroy();
+			}
+			myScroll = new iScroll("wrapperContent2",{checkDOMChange:false});
+		}
+		$("#contentPage2").live('pageinit', function () {
+				var content = ""
+				for (var i=1;i<11;i++){
+					content = content + "<li>";
+					content = content + "<img src=\"./img/headpic/"+i+".jpg\" onerror=\"errpic(this)\" class=\"listpic\"/>";
+					content = content + "<h3 class=\"listtitle\">Warren<span class=\"timestyle\">03-12 13:13</span></h3>";
+					content = content + "<p>";
+					content = content + "测试内容"+i;
+					content = content + "</p>";
+					content = content + "<img src=\"./img/phone.jpg\"/>";
+					content = content + "</li>";
+				}
+				$("#contentList2").append(content).listview('refresh');
+		});
+		$("#contentPage2").live("pagebeforeshow", function(){
+			setTimeout(loaded3, 200); 
+		});
+		$("#contentPage2").live("pageshow", function(){
+			
+		});
+	</script>
+	</body>
+</html>

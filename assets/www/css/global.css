@@ -1,0 +1,40 @@
+//没有格式的ul、li
+#comment-li{
+	list-style:none;
+}
+#comment-ul{
+	position:relative;
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	text-align:left;
+}
+/*语音按钮样式*/
+#voice_btn{
+	padding:10px;
+	}
+#send_btn{
+	padding:2px;
+}
+/*向左浮动的div*/
+.lfloat{
+	float:left;
+	}
+/*百度地图容器*/
+#baiduContent{
+	}
+
+/*新鲜事儿*/
+
+/*最近聊天*/
+
+/*页面背景*/
+.bgPage{
+	background: -webkit-gradient(linear,0 0,0 100%, from(#1B82F6),to(#FFF));
+		}
+
+/*返回按钮连接样式*/
+.backbtn{
+	text-decoration:none;
+	}

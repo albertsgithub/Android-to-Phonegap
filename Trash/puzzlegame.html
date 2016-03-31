@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width,height=device-height,initial-scale=1.0" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+	<script src="js/jquery-1.8.2.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="js/snow.js"></script><!--雪花-->
+    <script>createSnow("",60)</script>
+    <style>
+	#game2page{
+			background: -webkit-gradient(linear,0 0,0 100%, from(#000),to(#309));
+		}
+    </style>
+</head>
+<body>
+<div data-role="page" id="game2page" position="fixed">
+	<div data-role="header" data-theme="b" position="fixed">
+		<h1>拼图游戏</h1>
+		<a href="login.html" data-icon="arrow-l" data-transition="slide"></a>
+	</div>
+	<div data-role="content" id="content2" position="fixed">
+<div id="myscreen">
+<table width="220" height="220" border="2" cellspacing="3" cellpadding="3">
+  <tr>
+    <td><img id="pic1" src="img/game/1.png" onClick="deal(this)"></td>
+    <td><img id="pic2" src="img/game/2.png" onClick="deal(this)"></td>
+    <td><img id="pic3" src="img/game/3.png" onClick="deal(this)"></td>
+    </tr>
+  <tr>
+    <td><img id="pic4" src="img/game/4.png" onClick="deal(this)"></td>
+    <td><img id="pic5" src="img/game/5.png" onClick="deal(this)"></td>
+    <td><img id="pic6" src="img/game/6.png" onClick="deal(this)"></td>
+    </tr>
+  <tr>
+    <td><img id="pic7" src="img/game/7.png" onClick="deal(this)"></td>
+    <td><img id="pic8" src="img/game/8.png" onClick="deal(this)"></td>
+    <td><img id="pic9" src="img/game/white.png" onClick="deal(this)"></td>
+    </tr>
+</table>
+	</div><!-- myscreen -->
+	</div><!-- content -->
+</div><!-- page -->
+</div>
+<script type="text/javascript">
+
+var tempid="pic9";
+var index1;
+var a1,a2,a3,a4,a5,a6,a7,a8,a9;
+a1 = document.getElementById("pic1");
+a2 = document.getElementById("pic2");
+a3 = document.getElementById("pic3");
+a4 = document.getElementById("pic4");
+a5 = document.getElementById("pic5");
+a6 = document.getElementById("pic6");
+a7 = document.getElementById("pic7");
+a8 = document.getElementById("pic8");
+a9 = document.getElementById("pic9");
+
+function operate(obj)
+{
+	var timg = document.getElementById(tempid);
+	tempid = obj.id;
+	timg.src=obj.src;
+	var eimg = document.getElementById(obj.id);
+	eimg.src="white.png";
+}
+
+function deal(obj)
+{	
+	var s1,s2,s3,s4,s5,s6,s7,s8,s9;
+    if(tempid == "pic9" && (obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic8" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic7" && (obj.id == "pic4" || obj.id == "pic8") ||
+		tempid == "pic6" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic5" && (obj.id == "pic2" || obj.id == "pic4" || obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic4" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic3" && (obj.id == "pic2" || obj.id == "pic6") ||
+		tempid == "pic2" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic1" && (obj.id == "pic4" || obj.id == "pic2"))
+	{
+		operate(obj);	
+		s1 = a1.src.slice( a1.src.lastIndexOf("/") + 1 , a1.src.lastIndexOf("/") + 2);
+		s2 = a2.src.slice( a2.src.lastIndexOf("/") + 1 , a2.src.lastIndexOf("/") + 2);		
+		s3 = a3.src.slice( a3.src.lastIndexOf("/") + 1 , a3.src.lastIndexOf("/") + 2);		
+		s4 = a4.src.slice( a4.src.lastIndexOf("/") + 1 , a4.src.lastIndexOf("/") + 2);
+		s5 = a5.src.slice( a5.src.lastIndexOf("/") + 1 , a5.src.lastIndexOf("/") + 2);
+		s6 = a6.src.slice( a6.src.lastIndexOf("/") + 1 , a6.src.lastIndexOf("/") + 2);
+		s7 = a7.src.slice( a7.src.lastIndexOf("/") + 1 , a7.src.lastIndexOf("/") + 2);		
+		s8 = a8.src.slice( a8.src.lastIndexOf("/") + 1 , a8.src.lastIndexOf("/") + 2);
+		s9 = a9.src.slice( a9.src.lastIndexOf("/") + 1 , a9.src.lastIndexOf("/") + 2);
+		if(s1 == "1" && s2 == "2" && s3 == "3" && s4 == "4" &&
+		   s5 == "5" && s6 == "6" && s7 == "7" && s8 == "8" && s9 == "w")
+		{
+			$.mobile.changePage("login.html");
+		}
+	}	
+}
+
+function autodeal(obj)
+{
+	if(tempid == "pic9" && (obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic8" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic7" && (obj.id == "pic4" || obj.id == "pic8") ||
+		tempid == "pic6" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic9") ||
+		tempid == "pic5" && (obj.id == "pic2" || obj.id == "pic4" || obj.id == "pic6" || obj.id == "pic8") ||
+		tempid == "pic4" && (obj.id == "pic7" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic3" && (obj.id == "pic2" || obj.id == "pic6") ||
+		tempid == "pic2" && (obj.id == "pic3" || obj.id == "pic5" || obj.id == "pic1") ||
+		tempid == "pic1" && (obj.id == "pic4" || obj.id == "pic2"))
+	operate(obj);
+}
+
+for(var i=0;i<200;i++)
+{
+	autodeal(document.getElementById("pic"+ String(1 + Math.floor(Math.random() * ( 8 + 1)))));
+}
+</script>
+</body>
+</html>

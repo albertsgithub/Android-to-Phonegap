@@ -1,0 +1,17 @@
+/*记忆消除游戏*/
+	#gamepage{
+			background-color:#19416C;
+		}
+    #content{
+    border:20px;
+    }
+    .button{
+	float:left;
+	margin-left:20px;
+	margin-top:350px;
+    }
+    #gamearea{
+    position:absolute;
+	vertical-align:central;
+	left:20px;
+	    }

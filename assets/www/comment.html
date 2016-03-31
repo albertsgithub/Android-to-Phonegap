@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>评论说说</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+		<script src="js/jquery-1.8.2.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+		<link rel="stylesheet" href="css/styles.css"/>
+	</head>
+	<body>
+		<div data-role="page" id="commentPage"  data-theme="d">
+			<script type="text/javascript">
+				$("#aboutPage").live('pageinit', function() {
+				});
+				$("#aboutPage").live('pageshow', function() {
+				});
+			</script>
+			<div data-role="header" data-position="fixed" data-theme="b">
+				<a href="#recentPage" data-role="button" data-inline="true" data-icon="carat-l"></a> 
+				<h1>评论说说</h1>
+			</div>
+			<div data-role="content"  data-theme="d">
+				<div class="detailsContent">
+					<div class="contentHead">
+						 <img id="headpic" src="./img/phone.jpg" onerror="errpic(this)" class="head"/>
+						 <div id="nameDiv" class="name">Warren</div> 
+						 <div id="timeDiv" class="time">03-12 13:121</div>
+					</div>
+					<div id="contentDiv" class="contentSyle">信息内容</div>
+					<div id="picDiv" class="contentPic"></div>
+					<a href="#" data-role="button"data-inline="true" data-mini="true">我要评论</a>
+					<div id="commentDiv" class="comment">
+					 	<span class="weightFont">albeeert:</span>不错哦！
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
